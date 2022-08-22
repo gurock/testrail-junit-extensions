@@ -1,7 +1,7 @@
 # testrail-junit-extensions
 
-[![build workflow](https://github.com/d-rede/testrail-junit-extensions/actions/workflows/CI.yml/badge.svg)](https://github.com/d-rede/testrail-junit-extensions/actions/workflows/CI.yml)
-[![Known Vulnerabilities](https://snyk.io/test/github/d-rede/testrail-junit-extensions/badge.svg)](https://snyk.io/test/github/d-rede/testrail-junit-extensions)
+[![build workflow](https://github.com/gurock/testrail-junit-extensions/actions/workflows/CI.yml/badge.svg)](https://github.com/gurock/testrail-junit-extensions/actions/workflows/CI.yml)
+[![Known Vulnerabilities](https://snyk.io/test/github/gurock/testrail-junit-extensions/badge.svg)](https://snyk.io/test/github/gurock/testrail-junit-extensions)
 
 This repo contains several improvements for [JUnit](https://junit.org/junit5/) that allow you to take better advantage of JUnit 5 (jupiter engine) whenever using it together with [TestRail](https://www.testrail.com).
 This code is provided as-is; you're free to use it and modify it at your will (see license ahead).
