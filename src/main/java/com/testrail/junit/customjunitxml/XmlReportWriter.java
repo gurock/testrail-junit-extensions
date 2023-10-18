@@ -261,13 +261,13 @@ class XmlReportWriter {
 		}
 
 		Optional<TestRail> testRailTest = AnnotationSupport.findAnnotation(testMethod, TestRail.class);
-		String case_id = null;
+		String test_case_id = null;
 		String test_summary = null;
 		String test_description = null;
 		if (testRailTest.isPresent()) {
-			case_id = testRailTest.get().id();
-			if ((case_id != null) && (!case_id.isEmpty())) {
-				addProperty(writer, "case_id", case_id);
+			test_case_id = testRailTest.get().id();
+			if ((test_case_id != null) && (!test_case_id.isEmpty())) {
+				addProperty(writer, "test_id", test_case_id);
 			}
 
 			test_summary = testRailTest.get().summary();

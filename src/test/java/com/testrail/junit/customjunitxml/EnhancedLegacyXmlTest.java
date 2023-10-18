@@ -73,7 +73,7 @@ public class EnhancedLegacyXmlTest {
         Match testsuite = readValidXmlFile(tempDirectory.resolve(reportName));
         Match testcase = testsuite.child("testcase");
         assertThat(testcase.attr("name", String.class)).isEqualTo(testMethodName);
-        assertThat(testcase.child("properties").children("property").matchAttr("name", "case_id")).isEmpty();
+        assertThat(testcase.child("properties").children("property").matchAttr("name", "test_id")).isEmpty();
         assertThat(testcase.child("properties").children("property").matchAttr("name", "test_key")).isEmpty();
         assertThat(testcase.child("properties").children("property").matchAttr("name", "test_summary")).isEmpty();
         assertThat(testcase.child("properties").children("property").matchAttr("name", "test_description")).isEmpty();
@@ -192,7 +192,7 @@ public class EnhancedLegacyXmlTest {
         Match testsuite = readValidXmlFile(tempDirectory.resolve(REPORT_NAME));
         Match testcase = testsuite.child("testcase");
         assertThat(testcase.attr("name", String.class)).isEqualTo(testMethodName);
-        assertThat(testcase.child("properties").children("property").matchAttr("name", "case_id").attr("value")).isEqualTo("myCustomId");
+        assertThat(testcase.child("properties").children("property").matchAttr("name", "test_id").attr("value")).isEqualTo("myCustomId");
     }
 
     @Test

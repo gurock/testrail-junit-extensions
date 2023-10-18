@@ -41,7 +41,7 @@ Add the following dependency to your pom.xml:
 <dependency>
   <groupId>com.testrail</groupId>
   <artifactId>testrail-junit-extensions</artifactId>
-  <version>0.1.0</version>
+  <version>0.1.1</version>
   <scope>test</scope>
 </dependency>
 ```
@@ -115,7 +115,7 @@ Report testcase element:
 ```xml
 <testcase name="CanAddNumbers" classname="tests.SumTests">
   <properties>
-    <property name="case_id" value="123"/>
+    <property name="test_id" value="123"/>
   </properties>
 </testcase>
 ```
