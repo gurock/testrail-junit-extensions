@@ -115,7 +115,7 @@ Report testcase element:
 ```xml
 <testcase name="CanAddNumbers" classname="tests.SumTests">
   <properties>
-    <property name="case_id" value="123"/>
+    <property name="test_id" value="123"/>
   </properties>
 </testcase>
 ```
