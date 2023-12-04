@@ -299,7 +299,7 @@ class XmlReportWriter {
 		List<ReportEntry> entries = this.reportData.getReportEntries(testIdentifier);
 		Map<String, String> testrunProperties = getTestRunProperties(entries);
 		for (Map.Entry<String, String> property : testrunProperties.entrySet()) {
-			addProperty(writer, property.getKey(), property.getValue());
+			addPropertyAndEscapeValue(writer, property.getKey(), property.getValue());
 		}
 
 		writer.writeEndElement(); // properties
@@ -313,6 +313,14 @@ class XmlReportWriter {
 		writer.writeEmptyElement("property");
 		writeAttributeSafely(writer, "name", name);
 		writeAttributeSafely(writer, "value", value);
+		newLine(writer);
+	}
+
+
+	private void addPropertyAndEscapeValue(XMLStreamWriter writer, String name, String value) throws XMLStreamException {
+		writer.writeEmptyElement("property");
+		writeAttributeSafely(writer, "name", name);
+		writeAttributeSafelyEncodingSomeChars(writer, "value", value);
 		newLine(writer);
 	}
 
@@ -502,6 +510,11 @@ class XmlReportWriter {
 		writer.writeAttribute(name, escapeIllegalChars(value));
 	}
 
+
+	private void writeAttributeSafelyEncodingSomeChars(XMLStreamWriter writer, String name, String value) throws XMLStreamException {
+		writer.writeAttribute(name, escapeIllegalCharsForAttributes(value));
+	}
+
 	private void writeCDataSafely(XMLStreamWriter writer, String data) throws XMLStreamException {
 		for (String safeDataPart : CDATA_SPLIT_PATTERN.split(escapeIllegalChars(data))) {
 			writer.writeCData(safeDataPart);
@@ -529,6 +542,28 @@ class XmlReportWriter {
 				|| codePoint == 0xA //
 				|| codePoint == 0xD //
 				|| (codePoint >= 0x20 && codePoint <= 0xD7FF) //
+				|| (codePoint >= 0xE000 && codePoint <= 0xFFFD) //
+				|| (codePoint >= 0x10000 && codePoint <= 0x10FFFF);
+	}
+
+	static String escapeIllegalCharsForAttributes(String text) {
+		if (text.codePoints().allMatch(XmlReportWriter::isAllowedXmlCharacterForAttributes)) {
+			return text;
+		}
+		StringBuilder result = new StringBuilder(text.length() * 2);
+		text.codePoints().forEach(codePoint -> {
+			if (isAllowedXmlCharacterForAttributes(codePoint)) {
+				result.appendCodePoint(codePoint);
+			} else { // use a Character Reference (cf. https://www.w3.org/TR/xml/#NT-CharRef)
+				result.append("&#").append(codePoint).append(';');
+			}
+		});
+		return result.toString();
+	}
+
+	private static boolean isAllowedXmlCharacterForAttributes(int codePoint) {
+		// source: https://www.w3.org/TR/xml/#charsets with a workaround for enconding some characters, such as tab, newline, carriage return
+		return  (codePoint >= 0x20 && codePoint <= 0xD7FF) //
 				|| (codePoint >= 0xE000 && codePoint <= 0xFFFD) //
 				|| (codePoint >= 0x10000 && codePoint <= 0x10FFFF);
 	}
