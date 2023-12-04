@@ -382,7 +382,6 @@ public class EnhancedLegacyXmlTest {
     public void shouldStoreMultilineTestRunProperties() throws Exception {
         String testMethodName = "testWithTestRunPropertyMultiline";
         executeTestMethodWithParams(TEST_EXAMPLES_CLASS, testMethodName, "com.testrail.junit.customjunitxml.TestRailTestReporter");
-        dumpJunitXMLReport(tempDirectory.resolve(REPORT_NAME));
         Match testsuite = readValidXmlFile(tempDirectory.resolve(REPORT_NAME));
         Match testcase = testsuite.child("testcase");
         assertThat(testcase.attr("name", String.class)).isEqualTo(testMethodName);
