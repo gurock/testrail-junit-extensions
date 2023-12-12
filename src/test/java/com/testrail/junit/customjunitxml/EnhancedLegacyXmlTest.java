@@ -14,6 +14,7 @@ package com.testrail.junit.customjunitxml;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.joox.JOOX.$;
+import static org.joox.JOOX.attr;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.junit.platform.engine.discovery.DiscoverySelectors.selectMethod;
@@ -385,7 +386,7 @@ public class EnhancedLegacyXmlTest {
         Match testsuite = readValidXmlFile(tempDirectory.resolve(REPORT_NAME));
         Match testcase = testsuite.child("testcase");
         assertThat(testcase.attr("name", String.class)).isEqualTo(testMethodName);
-        assertThat(testcase.child("properties").children("property").matchAttr("name", "testrail_case_field").attr("value")).isEqualTo("custom_steps:1. First step&#10;2. Second step&#10;3. Third step");
+        assertThat(testcase.child("properties").children("property").matchAttr("name", "testrail_case_field").attr("value")).isEqualTo("custom_steps:1. First step\n2. Second step\n3. Third step");
     }
 
 	private Match readValidXmlFile(Path xmlFile) throws Exception {

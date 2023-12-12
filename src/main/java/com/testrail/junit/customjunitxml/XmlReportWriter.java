@@ -126,6 +126,7 @@ class XmlReportWriter {
 			Writer out) throws XMLStreamException {
 
 		XMLOutputFactory factory = XMLOutputFactory.newInstance();
+		factory.setProperty("escapeCharacters", false);
 		XMLStreamWriter xmlWriter = factory.createXMLStreamWriter(out);
 		xmlWriter.writeStartDocument("UTF-8", "1.0");
 		newLine(xmlWriter);
@@ -318,9 +319,7 @@ class XmlReportWriter {
 
 
 	private void addPropertyAndEscapeValue(XMLStreamWriter writer, String name, String value) throws XMLStreamException {
-		writer.writeEmptyElement("property");
-		writeAttributeSafely(writer, "name", name);
-		writeAttributeSafelyEncodingSomeChars(writer, "value", value);
+		writer.writeCharacters(String.format("<property name=\"%s\" value=\"%s\"/>", name, escapeIllegalCharsForAttributes(value)));
 		newLine(writer);
 	}
 
