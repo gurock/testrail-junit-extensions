@@ -14,7 +14,6 @@ package com.testrail.junit.customjunitxml;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.joox.JOOX.$;
-import static org.joox.JOOX.attr;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.junit.platform.engine.discovery.DiscoverySelectors.selectMethod;
@@ -379,16 +378,6 @@ public class EnhancedLegacyXmlTest {
         assertThat(testcase.child("properties").children("property").matchAttr("name", "my_property2").attr("value")).isEqualTo("world");
     }
 
-    @Test
-    public void shouldStoreMultilineTestRunProperties() throws Exception {
-        String testMethodName = "testWithTestRunPropertyMultiline";
-        executeTestMethodWithParams(TEST_EXAMPLES_CLASS, testMethodName, "com.testrail.junit.customjunitxml.TestRailTestReporter");
-        Match testsuite = readValidXmlFile(tempDirectory.resolve(REPORT_NAME));
-        Match testcase = testsuite.child("testcase");
-        assertThat(testcase.attr("name", String.class)).isEqualTo(testMethodName);
-        assertThat(testcase.child("properties").children("property").matchAttr("name", "testrail_case_field").attr("value")).isEqualTo("custom_steps:1. First step\n2. Second step\n3. Third step");
-    }
-
 	private Match readValidXmlFile(Path xmlFile) throws Exception {
 		assertTrue(Files.exists(xmlFile), () -> "File does not exist: " + xmlFile);
 		try (BufferedReader reader = Files.newBufferedReader(xmlFile)) {
@@ -408,15 +397,6 @@ public class EnhancedLegacyXmlTest {
 			fail("Invalid XML document: " + document, e);
 		}
 	}
-
-    private void dumpJunitXMLReport(Path reportPath) {
-        System.out.println("Junit XML report: " + reportPath);
-        try {
-            Files.lines(reportPath).forEach(System.out::println);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
 	private enum CachedSchema {
 

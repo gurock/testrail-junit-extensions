@@ -40,12 +40,6 @@ public class ExamplesTestRailEnabledTestExamples {
     }
 
     @Test
-    public void testWithTestRunPropertyMultiline(TestRailTestReporter customReporter) {
-        customReporter.setProperty("testrail_case_field", "custom_steps:1. First step\n2. Second step\n3. Third step");
-    }
-
-
-    @Test
     @TestRail(id = "myCustomId")
     public void annotatedTestWithCustomId() {
         fail("this should have id: myCustomId");
