@@ -270,7 +270,7 @@ public class EnhancedLegacyXmlTest {
 
     private void executeTestMethodWithCustomProperties(Class<?> testClass, String methodName, Path propertiesPath,  String methodParameterTypes, Clock clock) {
         LauncherDiscoveryRequest discoveryRequest = request()//
-                .selectors(selectMethod(testClass, methodName, ""))
+                .selectors(selectMethod(testClass, methodName, methodParameterTypes))
                 .build();
         Launcher launcher = LauncherFactory.create();
         EnhancedLegacyXmlReportGeneratingListener listener = new EnhancedLegacyXmlReportGeneratingListener(tempDirectory, propertiesPath, new PrintWriter(System.out), clock);
@@ -369,6 +369,35 @@ public class EnhancedLegacyXmlTest {
     }
 
     @Test
+    public void shouldStoreTestRunPropertiesWithSpecialCharsInValue() throws Exception {
+        String testMethodName = "testWithTestRunPropertyWithSpecialCharsInValue";
+        executeTestMethodWithParams(TEST_EXAMPLES_CLASS, testMethodName, "com.testrail.junit.customjunitxml.TestRailTestReporter");
+        Match testsuite = readValidXmlFile(tempDirectory.resolve(REPORT_NAME));
+        Match testcase = testsuite.child("testcase");
+        assertThat(testcase.attr("name", String.class)).isEqualTo(testMethodName);
+        assertThat(testcase.child("properties").children("property").matchAttr("name", "testrail_result_comment").attr("value")).isEqualTo("testing:&&qS55!T@");
+    }
+  
+    @Test
+    public void shouldStoreTestRunPropertiesAsCData() throws Exception {
+        String testMethodName = "testWithCustomMultilineProperty";
+        String customProperties = "properties_using_cdata=multiline_property\n";
+        Path customPropertiesFile = Files.createTempFile("testrail-junit-extensions", ".properties");
+        Files.write(customPropertiesFile, customProperties.getBytes());
+
+        String fakeTimestamp = "2021-03-24T12:01:02.456";
+        LocalDateTime now = LocalDateTime.parse(fakeTimestamp);
+        ZoneId zone = ZoneId.of("UTC");
+        Clock clock = Clock.fixed(ZonedDateTime.of(now, zone).toInstant(), zone);
+
+        executeTestMethodWithCustomProperties(TEST_EXAMPLES_CLASS, testMethodName, customPropertiesFile, "com.testrail.junit.customjunitxml.TestRailTestReporter", clock);
+        Match testsuite = readValidXmlFile(tempDirectory.resolve(REPORT_NAME));
+        Match testcase = testsuite.child("testcase");
+        assertThat(testcase.attr("name", String.class)).isEqualTo(testMethodName);
+        assertThat(testcase.child("properties").children("property").matchAttr("name", "multiline_property").cdata()).isEqualTo("1. First step\n2. Second step\n3. Third step");
+    }
+
+    @Test
     public void shouldStoreTestRunPropertiesMultiple() throws Exception {
         String testMethodName = "testWithMultipleTestRunProperties";
         executeTestMethodWithParams(TEST_EXAMPLES_CLASS, testMethodName, "com.testrail.junit.customjunitxml.TestRailTestReporter");
@@ -381,16 +410,18 @@ public class EnhancedLegacyXmlTest {
 
     @Test
     public void shouldStoreMultilineTestRunProperties() throws Exception {
-        String testMethodName = "testWithTestRunPropertyMultiline";
+        String testMethodName = "testWithDefaultMultilineProperty";
         executeTestMethodWithParams(TEST_EXAMPLES_CLASS, testMethodName, "com.testrail.junit.customjunitxml.TestRailTestReporter");
         Match testsuite = readValidXmlFile(tempDirectory.resolve(REPORT_NAME));
         Match testcase = testsuite.child("testcase");
         assertThat(testcase.attr("name", String.class)).isEqualTo(testMethodName);
-        assertThat(testcase.child("properties").children("property").matchAttr("name", "testrail_case_field").attr("value")).isEqualTo("custom_steps:1. First step\n2. Second step\n3. Third step");
+        assertThat(testcase.child("properties").children("property").matchAttr("name", "testrail_case_field").attr("value")).isNull();
+        assertThat(testcase.child("properties").children("property").matchAttr("name", "testrail_case_field").cdata()).isEqualTo("custom_steps:1. First step\n2. Second step\n3. Third step");
     }
 
 	private Match readValidXmlFile(Path xmlFile) throws Exception {
 		assertTrue(Files.exists(xmlFile), () -> "File does not exist: " + xmlFile);
+        // dumpJunitXMLReport(xmlFile);
 		try (BufferedReader reader = Files.newBufferedReader(xmlFile)) {
 			Match xml = $(reader);
             assertValidAccordingToJenkinsSchema(xml.document());

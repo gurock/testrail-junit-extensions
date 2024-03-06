@@ -34,16 +34,25 @@ public class ExamplesTestRailEnabledTestExamples {
     }
 
     @Test
+    public void testWithTestRunPropertyWithSpecialCharsInValue(TestRailTestReporter customReporter) {
+        customReporter.setProperty("testrail_result_comment", "testing:&&qS55!T@");
+    }
+
+    @Test
     public void testWithMultipleTestRunProperties(TestRailTestReporter customReporter) {
         customReporter.setProperty("my_property1", "hello");
         customReporter.setProperty("my_property2", "world");
     }
 
     @Test
-    public void testWithTestRunPropertyMultiline(TestRailTestReporter customReporter) {
+    public void testWithDefaultMultilineProperty(TestRailTestReporter customReporter) {
         customReporter.setProperty("testrail_case_field", "custom_steps:1. First step\n2. Second step\n3. Third step");
     }
 
+    @Test
+    public void testWithCustomMultilineProperty(TestRailTestReporter customReporter) {
+        customReporter.setProperty("multiline_property", "1. First step\n2. Second step\n3. Third step");
+    }
 
     @Test
     @TestRail(id = "myCustomId")
