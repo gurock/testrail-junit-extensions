@@ -41,7 +41,7 @@ Add the following dependency to your pom.xml:
 <dependency>
   <groupId>com.testrail</groupId>
   <artifactId>testrail-junit-extensions</artifactId>
-  <version>0.1.1</version>
+  <version>0.2.0</version>
   <scope>test</scope>
 </dependency>
 ```
@@ -53,13 +53,15 @@ If you want, you may configure certain aspects of this extension. The defaults s
 - `report_filename`: the name of the report, without ending .xml suffix. Default is "TEST-junit-jupiter.xml"
 - `report_directory`: the directory where to generate the report, in relative or absolute format. Default is "target"
 - `add_timestamp_to_report_filename`: the name of the report, without ending .xml suffix. Default is "false".
-
+- `properties_using_cdata`: list of properties, delimited by comma, whose content should be encoded as cdata inner content instead of `value` attribute on the `property` element; by default "testrail_case_field" is encoded as cdata. This is useful whenever you want to add properties that have newlines and other characters as part of their content. (encoding as cdata is only supported by TR CLI v1.9.3+)
+ 
 Example:
 
 ```bash
 report_filename=custom-report-junit
 report_directory=reports
 add_timestamp_to_report_filename=true
+properties_using_cdata=testrail_case_field
 ```
 
 ## How to use
