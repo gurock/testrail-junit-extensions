@@ -51,8 +51,10 @@ Adding the correct dependency to the Surefire plugin, your output should now loo
 [INFO] ------------------------------------------------------------------------
 ```
 
-Notice the different provider (and different output). Also, the JUnit-style reports are now in
-`target/surefire-reports`, where JUnit normally places these.
+Notice the different provider (and different output). Also, `target/surefire-reports` is now
+populated with the usual JUnit-style reports, **and you loose the TestNG HTML reports**. If you
+still need HTML reports, have a look at
+[maven-surefire-report-plugin](https://maven.apache.org/surefire/maven-surefire-report-plugin/).
 
 We can now hook up the `testrail-junit-extensions` dependency, **plus** specify the correct listener
 in `src/test/resources/META-INF/services/org.junit.platform.launcher.TestExecutionListener`.
