@@ -25,10 +25,10 @@ Note that TestNG produces JUnit-style reports in `target/surefire-reports/junitr
 
 In order to take advantage of the
 [testrail-junit-extensions](https://github.com/gurock/testrail-junit-extensions), you must use a
-[JUnit5 engine](https://maven.apache.org/surefire/maven-surefire-plugin/examples/junit-platform.html#how-to-run-testng-tests-within-the-junit-platform)
+[JUnit5 engine](https://maven.apache.org/surefire/maven-surefire-plugin/examples/junit-platform.html#smart-resolution-of-jupiter-engine-and-vintage-engine-for-junit4)
 to run the tests.
 
-Adding the correct dependency, your output should now look something like:
+Adding the correct dependency to the Surefire plugin, your output should now look something like:
 
 ```
 [INFO] --- maven-surefire-plugin:3.5.2:test (default-test) @ testng-sample ---
@@ -58,7 +58,7 @@ We can now hook up the `testrail-junit-extensions` dependency, **plus** specify 
 in `src/test/resources/META-INF/services/org.junit.platform.launcher.TestExecutionListener`.
 
 After this dependency nothing much changes in the output. However, you will get a new file
-`target/TEST-testng.xml` that is the aggregate of all the JUnit-style reports, plus all the
+`target/TEST-testng.xml` that is the aggregate of all the JUnit-style reports **including** all the
 `@TestRail` annotations from your tests.
 
 ... profit! ;)

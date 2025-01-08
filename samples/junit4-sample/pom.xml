@@ -21,14 +21,6 @@
             <scope>test</scope>
         </dependency>
         
-        <!-- To siplify TestRail integration, we need to use a JUnit5 engine. -->
-        <dependency>
-            <groupId>org.junit.vintage</groupId>
-            <artifactId>junit-vintage-engine</artifactId>
-            <version>5.9.1</version>
-            <scope>test</scope>
-        </dependency>
-        
         <dependency>
             <groupId>com.testrail</groupId>
             <artifactId>testrail-junit-extensions</artifactId>
@@ -49,11 +41,18 @@
       
         <plugins>
         
-            <!-- We also need to use a more recent Surefire plugin, to take advantage of the JUnit5 engine. -->
+            <!-- testrail-junit-extensions needs the correct JUnit5 engine. -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.5.2</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.junit.vintage</groupId>
+                        <artifactId>junit-vintage-engine</artifactId>
+                        <version>5.9.1</version>
+                    </dependency>
+               </dependencies>
             </plugin>
             
         </plugins>
