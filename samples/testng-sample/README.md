@@ -52,7 +52,7 @@ Adding the correct dependency to the Surefire plugin, your output should now loo
 ```
 
 Notice the different provider (and different output). Also, `target/surefire-reports` is now
-populated with the usual JUnit-style reports, **and you loose the TestNG HTML reports**. If you
+populated with the usual JUnit-style reports, **but you loose the TestNG HTML reports**. If you
 still need HTML reports, have a look at
 [maven-surefire-report-plugin](https://maven.apache.org/surefire/maven-surefire-report-plugin/).
 
