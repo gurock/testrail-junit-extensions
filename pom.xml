@@ -44,10 +44,8 @@
     </scm>
 
     <properties>
-        <junit-jupiter.version>5.7.1</junit-jupiter.version>
-        <junit.version>4.13.2</junit.version>
-        <junit-platform.version>1.7.1</junit-platform.version>
-        <slf4j-log4j12.version>1.7.25</slf4j-log4j12.version>
+        <junit-jupiter.version>5.11.4</junit-jupiter.version>
+        <junit-platform.version>1.11.4</junit-platform.version>
         <version.maven-plugin-plugin>3.6.0</version.maven-plugin-plugin>
         <nexus-staging-maven-plugin.version>1.6.13</nexus-staging-maven-plugin.version>
     </properties>
@@ -87,6 +85,7 @@
             <groupId>org.junit.platform</groupId>
             <artifactId>junit-platform-runner</artifactId>
             <version>${junit-platform.version}</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.assertj</groupId>
@@ -142,6 +141,7 @@
         
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.9.0</version>
                 <configuration>
                     <debug>true</debug>
                     <source>1.8</source>
