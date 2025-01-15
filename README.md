@@ -176,8 +176,8 @@ JUnit 5 provides a [legacy XML reporter for the jupiter engine](https://junit.or
 
 ## FAQ
 
-1. Can this be used with JUnit 4?
-No. If you're using JUnit 4 you can still generate a "standard" JUnit XML report but you'll miss the capabilities provided by this project. It's recommended to use JUnit 5 as JUnit 4 is an older project and much more limited.
+1. Can this be used with JUnit 4 or TestNG?
+Yes! See the [`samples` directory](samples).
 
 2. Is this format compatible with Jenkins and other tools?
 Probably. As there is no official JUnit XML schema, it's hard to say that in advance. However, the new information being embed on the custom JUnit XML report is done in such a way that shouldn't break other tools.

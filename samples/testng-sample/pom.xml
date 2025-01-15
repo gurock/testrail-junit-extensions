@@ -1,0 +1,63 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  
+  <groupId>test.example</groupId>
+  <artifactId>testng-sample</artifactId>
+  <version>1-SNAPSHOT</version>
+  
+  <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+  </properties>
+  
+  <dependencies>
+    
+        <!-- Older versions of TestNG still work! -->
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>6.14.3</version>
+            <scope>test</scope>
+        </dependency>
+        
+        <dependency>
+            <groupId>com.testrail</groupId>
+            <artifactId>testrail-junit-extensions</artifactId>
+            <version>0.2.1</version>
+            <scope>test</scope>
+            <exclusions>
+                <!-- https://github.com/gurock/testrail-junit-extensions/issues/12 -->
+                <exclusion>
+                    <groupId>org.junit.platform</groupId>
+                    <artifactId>junit-platform-runner</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        
+  </dependencies>
+  
+      <build>
+      
+        <plugins>
+        
+            <!-- testrail-junit-extensions needs the correct JUnit5 engine. -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.5.2</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.junit.support</groupId>
+                        <artifactId>testng-engine</artifactId>
+                        <version>1.0.1</version>
+                    </dependency>
+               </dependencies>
+            </plugin>
+            
+        </plugins>
+        
+      </build>
+  
+</project>
