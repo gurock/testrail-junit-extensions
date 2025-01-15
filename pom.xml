@@ -29,12 +29,6 @@
           <organization>TestRail</organization>
           <organizationUrl>https://www.testrail.com</organizationUrl>
       </developer>
-      <developer>
-          <name>Diogo Rede</name>
-          <email>diogo.rede@gurock.io</email>
-          <organization>TestRail</organization>
-          <organizationUrl>https://www.testrail.com</organizationUrl>
-      </developer>
     </developers>
   
     <scm>
