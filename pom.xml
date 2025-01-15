@@ -4,7 +4,7 @@
     <groupId>com.testrail</groupId>
     <artifactId>testrail-junit-extensions</artifactId>
     <packaging>jar</packaging>
-    <version>0.2.1</version>
+    <version>0.2.2</version>
     <name>testrail-junit-extensions</name>
     <description>Improvements for JUnit that allow you to take better advantage of JUnit 5 (jupiter engine)</description>
     <url>https://github.com/gurock/testrail-junit-extensions</url>
